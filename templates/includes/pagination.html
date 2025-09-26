@@ -1,0 +1,80 @@
+{% if is_paginated %}
+<div class="flex flex-col sm:flex-row justify-between items-center gap-4">
+  <!-- Page Info -->
+  <div class="text-sm text-gray-700">
+    Mostrando
+    <span class="font-medium">{{ page_obj.start_index }}</span>
+    a
+    <span class="font-medium">{{ page_obj.end_index }}</span>
+    de
+    <span class="font-medium">{{ page_obj.paginator.count }}</span>
+    resultado{{ page_obj.paginator.count|pluralize }}
+  </div>
+
+  <!-- Pagination Controls -->
+  <nav class="flex items-center space-x-1">
+    {% if page_obj.has_previous %}
+    <!-- First Page -->
+    <a
+      href="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page=1"
+      class="px-3 py-2 text-sm text-gray-500 hover:text-amber-600 hover:bg-amber-50 rounded-md transition-colors"
+    >
+      Primeira
+    </a>
+
+    <!-- Previous Page -->
+    <a
+      href="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ page_obj.previous_page_number }}"
+      class="px-3 py-2 text-sm text-gray-500 hover:text-amber-600 hover:bg-amber-50 rounded-md transition-colors"
+    >
+      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+        <path
+          fill-rule="evenodd"
+          d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+          clip-rule="evenodd"
+        ></path>
+      </svg>
+    </a>
+    {% endif %}
+
+    <!-- Page Numbers -->
+    {% for num in page_obj.paginator.page_range %} {% if page_obj.number == num
+    %}
+    <span
+      class="px-3 py-2 text-sm font-medium text-white bg-gradient-to-r from-amber-600 to-red-700 rounded-md"
+    >
+      {{ num }}
+    </span>
+    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+    <a
+      href="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ num }}"
+      class="px-3 py-2 text-sm text-gray-500 hover:text-amber-600 hover:bg-amber-50 rounded-md transition-colors"
+    >
+      {{ num }}
+    </a>
+    {% endif %} {% endfor %} {% if page_obj.has_next %}
+    <!-- Next Page -->
+    <a
+      href="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ page_obj.next_page_number }}"
+      class="px-3 py-2 text-sm text-gray-500 hover:text-amber-600 hover:bg-amber-50 rounded-md transition-colors"
+    >
+      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+        <path
+          fill-rule="evenodd"
+          d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+          clip-rule="evenodd"
+        ></path>
+      </svg>
+    </a>
+
+    <!-- Last Page -->
+    <a
+      href="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ page_obj.paginator.num_pages }}"
+      class="px-3 py-2 text-sm text-gray-500 hover:text-amber-600 hover:bg-amber-50 rounded-md transition-colors"
+    >
+      Última
+    </a>
+    {% endif %}
+  </nav>
+</div>
+{% endif %}

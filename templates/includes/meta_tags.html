@@ -1,0 +1,79 @@
+<!-- SEO Meta Tags -->
+<meta
+  name="description"
+  content="{% block meta_description %}NEABI - Núcleo de Estudos Afro-Brasileiros e Indígenas. Promovendo diversidade étnico-racial através de pesquisas, projetos e eventos educacionais.{% endblock %}"
+/>
+<meta
+  name="keywords"
+  content="{% block meta_keywords %}NEABI, núcleo estudos afro-brasileiros, indígenas, diversidade étnico-racial, educação, pesquisa, cultura africana, cultura indígena{% endblock %}"
+/>
+<meta name="author" content="NEABI" />
+<meta name="robots" content="index, follow" />
+
+<!-- Open Graph Meta Tags -->
+<meta
+  property="og:title"
+  content="{% block og_title %}NEABI - Núcleo de Estudos Afro-Brasileiros e Indígenas{% endblock %}"
+/>
+<meta
+  property="og:description"
+  content="{% block og_description %}Promovendo diversidade étnico-racial através de pesquisas, projetos e eventos educacionais.{% endblock %}"
+/>
+<meta property="og:type" content="{% block og_type %}website{% endblock %}" />
+<meta
+  property="og:url"
+  content="{% block og_url %}{{ request.build_absolute_uri }}{% endblock %}"
+/>
+<meta
+  property="og:image"
+  content="{% block og_image %}{% load static %}{{ request.build_absolute_uri }}{% static 'images/neabi-logo-og.jpg' %}{% endblock %}"
+/>
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:site_name" content="NEABI" />
+<meta property="og:locale" content="pt_BR" />
+
+<!-- Twitter Meta Tags -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta
+  name="twitter:title"
+  content="{% block twitter_title %}NEABI - Núcleo de Estudos Afro-Brasileiros e Indígenas{% endblock %}"
+/>
+<meta
+  name="twitter:description"
+  content="{% block twitter_description %}Promovendo diversidade étnico-racial através de pesquisas, projetos e eventos educacionais.{% endblock %}"
+/>
+<meta
+  name="twitter:image"
+  content="{% block twitter_image %}{% load static %}{{ request.build_absolute_uri }}{% static 'images/neabi-logo-og.jpg' %}{% endblock %}"
+/>
+
+<!-- Favicon -->
+<link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}" />
+<link
+  rel="apple-touch-icon"
+  sizes="180x180"
+  href="{% static 'images/apple-touch-icon.png' %}"
+/>
+<link
+  rel="icon"
+  type="image/png"
+  sizes="32x32"
+  href="{% static 'images/favicon-32x32.png' %}"
+/>
+<link
+  rel="icon"
+  type="image/png"
+  sizes="16x16"
+  href="{% static 'images/favicon-16x16.png' %}"
+/>
+
+<!-- Theme Color -->
+<meta name="theme-color" content="#d97706" />
+<meta name="msapplication-TileColor" content="#d97706" />
+
+<!-- Canonical URL -->
+<link
+  rel="canonical"
+  href="{% block canonical_url %}{{ request.build_absolute_uri }}{% endblock %}"
+/>

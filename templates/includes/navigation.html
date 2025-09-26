@@ -1,0 +1,295 @@
+{% load static %}
+
+<nav class="bg-white shadow-lg border-b border-amber-100 relative z-40">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+      <!-- Logo -->
+      <div class="flex items-center">
+        <a href="{% url 'home' %}" class="flex items-center">
+          <div
+            class="w-10 h-10 bg-gradient-to-r from-amber-600 to-red-700 rounded-full flex items-center justify-center mr-3"
+          >
+            <span class="text-white font-bold text-lg">N</span>
+          </div>
+          <div class="text-xl font-bold text-gray-900">NEABI</div>
+        </a>
+      </div>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden md:block">
+        <div class="ml-10 flex items-baseline space-x-8">
+          <a
+            href="{% url 'home' %}"
+            class="{% if request.resolver_match.url_name == 'home' %}text-amber-600 border-b-2 border-amber-600{% else %}text-gray-700 hover:text-amber-600{% endif %} px-3 py-2 text-sm font-medium transition-colors"
+          >
+            Início
+          </a>
+          <a
+            href="{% url 'sobre' %}"
+            class="{% if request.resolver_match.url_name == 'sobre' %}text-amber-600 border-b-2 border-amber-600{% else %}text-gray-700 hover:text-amber-600{% endif %} px-3 py-2 text-sm font-medium transition-colors"
+          >
+            Sobre
+          </a>
+
+          <!-- Projetos Dropdown -->
+          <div class="relative group">
+            <button
+              class="{% if 'projetos' in request.resolver_match.url_name or 'eventos' in request.resolver_match.url_name %}text-amber-600 border-b-2 border-amber-600{% else %}text-gray-700 hover:text-amber-600{% endif %} px-3 py-2 text-sm font-medium transition-colors flex items-center"
+            >
+              Projetos
+              <svg class="ml-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+            </button>
+            <div
+              class="absolute left-0 mt-2 w-64 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200"
+            >
+              <div class="py-1">
+                <a
+                  href="{% url 'projetos' %}"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-amber-50 hover:text-amber-600"
+                >
+                  Visão Geral dos Projetos
+                </a>
+                <a
+                  href="{% url 'semana_consciencia_negra' %}"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-amber-50 hover:text-amber-600"
+                >
+                  Semana da Consciência Negra
+                </a>
+                <a
+                  href="{% url 'eventos' %}"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-amber-50 hover:text-amber-600"
+                >
+                  Eventos
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <a
+            href="{% url 'blog' %}"
+            class="{% if 'blog' in request.resolver_match.url_name %}text-amber-600 border-b-2 border-amber-600{% else %}text-gray-700 hover:text-amber-600{% endif %} px-3 py-2 text-sm font-medium transition-colors"
+          >
+            Blog
+          </a>
+          <a
+            href="{% url 'contato' %}"
+            class="{% if request.resolver_match.url_name == 'contato' %}text-amber-600 border-b-2 border-amber-600{% else %}text-gray-700 hover:text-amber-600{% endif %} px-3 py-2 text-sm font-medium transition-colors"
+          >
+            Contato
+          </a>
+        </div>
+      </div>
+
+      <!-- User Menu -->
+      <div class="hidden md:block">
+        <div class="ml-4 flex items-center md:ml-6">
+          {% if user.is_authenticated %}
+          <div class="relative group">
+            <button
+              class="flex items-center text-sm text-gray-700 hover:text-amber-600 focus:outline-none"
+            >
+              <div
+                class="w-8 h-8 bg-amber-600 rounded-full flex items-center justify-center mr-2"
+              >
+                <span class="text-white font-medium text-sm"
+                  >{{ user.first_name|first|upper }}</span
+                >
+              </div>
+              {{ user.get_full_name|default:user.username }}
+              <svg class="ml-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+            </button>
+            <div
+              class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200"
+            >
+              <div class="py-1">
+                {% if user.role == 'admin' %}
+                <a
+                  href="{% url 'admin_dashboard' %}"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-amber-50 hover:text-amber-600"
+                >
+                  Painel Admin
+                </a>
+                {% endif %}
+                <a
+                  href="{% url 'admin_logout' %}"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-amber-50 hover:text-amber-600"
+                >
+                  Sair
+                </a>
+              </div>
+            </div>
+          </div>
+          {% else %}
+          <a
+            href="{% url 'admin_login' %}"
+            class="bg-gradient-to-r from-amber-600 to-red-700 hover:from-amber-700 hover:to-red-800 text-white px-4 py-2 rounded-md text-sm font-medium transition-all"
+          >
+            Entrar
+          </a>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Mobile menu button -->
+      <div class="md:hidden">
+        <button
+          type="button"
+          id="mobile-menu-button"
+          class="bg-white p-2 rounded-md text-gray-700 hover:text-amber-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-amber-500"
+        >
+          <svg
+            class="h-6 w-6"
+            stroke="currentColor"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              id="menu-open"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+            <path
+              id="menu-close"
+              class="hidden"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div class="md:hidden hidden" id="mobile-menu">
+    <div
+      class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-gray-200"
+    >
+      <a
+        href="{% url 'home' %}"
+        class="{% if request.resolver_match.url_name == 'home' %}bg-amber-50 text-amber-600{% else %}text-gray-700 hover:bg-amber-50 hover:text-amber-600{% endif %} block px-3 py-2 rounded-md text-base font-medium"
+      >
+        Início
+      </a>
+      <a
+        href="{% url 'sobre' %}"
+        class="{% if request.resolver_match.url_name == 'sobre' %}bg-amber-50 text-amber-600{% else %}text-gray-700 hover:bg-amber-50 hover:text-amber-600{% endif %} block px-3 py-2 rounded-md text-base font-medium"
+      >
+        Sobre
+      </a>
+
+      <!-- Mobile Projetos -->
+      <div class="pl-3">
+        <div class="text-gray-700 font-medium py-2">Projetos</div>
+        <a
+          href="{% url 'projetos' %}"
+          class="{% if request.resolver_match.url_name == 'projetos' %}bg-amber-50 text-amber-600{% else %}text-gray-600 hover:bg-amber-50 hover:text-amber-600{% endif %} block px-3 py-2 rounded-md text-sm"
+        >
+          Visão Geral
+        </a>
+        <a
+          href="{% url 'semana_consciencia_negra' %}"
+          class="{% if request.resolver_match.url_name == 'semana_consciencia_negra' %}bg-amber-50 text-amber-600{% else %}text-gray-600 hover:bg-amber-50 hover:text-amber-600{% endif %} block px-3 py-2 rounded-md text-sm"
+        >
+          Semana da Consciência Negra
+        </a>
+        <a
+          href="{% url 'eventos' %}"
+          class="{% if 'eventos' in request.resolver_match.url_name %}bg-amber-50 text-amber-600{% else %}text-gray-600 hover:bg-amber-50 hover:text-amber-600{% endif %} block px-3 py-2 rounded-md text-sm"
+        >
+          Eventos
+        </a>
+      </div>
+
+      <a
+        href="{% url 'blog' %}"
+        class="{% if 'blog' in request.resolver_match.url_name %}bg-amber-50 text-amber-600{% else %}text-gray-700 hover:bg-amber-50 hover:text-amber-600{% endif %} block px-3 py-2 rounded-md text-base font-medium"
+      >
+        Blog
+      </a>
+      <a
+        href="{% url 'contato' %}"
+        class="{% if request.resolver_match.url_name == 'contato' %}bg-amber-50 text-amber-600{% else %}text-gray-700 hover:bg-amber-50 hover:text-amber-600{% endif %} block px-3 py-2 rounded-md text-base font-medium"
+      >
+        Contato
+      </a>
+
+      <!-- Mobile User Menu -->
+      {% if user.is_authenticated %}
+      <div class="border-t border-gray-200 pt-4 pb-3">
+        <div class="flex items-center px-3">
+          <div
+            class="w-10 h-10 bg-amber-600 rounded-full flex items-center justify-center mr-3"
+          >
+            <span class="text-white font-medium"
+              >{{ user.first_name|first|upper }}</span
+            >
+          </div>
+          <div>
+            <div class="text-base font-medium text-gray-800">
+              {{ user.get_full_name|default:user.username }}
+            </div>
+            <div class="text-sm text-gray-500">{{ user.email }}</div>
+          </div>
+        </div>
+        <div class="mt-3 space-y-1">
+          {% if user.role == 'admin' %}
+          <a
+            href="{% url 'admin_dashboard' %}"
+            class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-amber-50 hover:text-amber-600"
+          >
+            Painel Admin
+          </a>
+          {% endif %}
+          <a
+            href="{% url 'admin_logout' %}"
+            class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-amber-50 hover:text-amber-600"
+          >
+            Sair
+          </a>
+        </div>
+      </div>
+      {% else %}
+      <div class="border-t border-gray-200 pt-4 pb-3">
+        <a
+          href="{% url 'admin_login' %}"
+          class="bg-gradient-to-r from-amber-600 to-red-700 hover:from-amber-700 hover:to-red-800 text-white block text-center px-3 py-2 rounded-md text-base font-medium mx-3"
+        >
+          Entrar
+        </a>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</nav>
+
+<script>
+  // Mobile menu toggle
+  document
+    .getElementById("mobile-menu-button")
+    .addEventListener("click", function () {
+      const menu = document.getElementById("mobile-menu");
+      const menuOpen = document.getElementById("menu-open");
+      const menuClose = document.getElementById("menu-close");
+
+      menu.classList.toggle("hidden");
+      menuOpen.classList.toggle("hidden");
+      menuClose.classList.toggle("hidden");
+    });
+</script>

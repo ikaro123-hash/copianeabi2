@@ -1,0 +1,199 @@
+{% extends 'base.html' %} {% block content %}
+<!-- Hero Section -->
+<section class="py-20 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-7xl mx-auto text-center">
+    <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+      Núcleo de Estudos
+      <span
+        class="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 to-red-700"
+        >Afro-Brasileiros</span
+      >
+      e Indígenas
+    </h1>
+    <p class="text-xl text-gray-600 max-w-4xl mx-auto mb-8 leading-relaxed">
+      Promovendo educação antirracista, diversidade e inclusão através de
+      pesquisa, extensão e eventos educativos para toda a comunidade acadêmica.
+    </p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a
+        href="/sobre/"
+        class="bg-amber-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-amber-700 transition-colors"
+      >
+        Conheça Nosso Trabalho
+      </a>
+      <a
+        href="/eventos/"
+        class="border border-amber-600 text-amber-600 px-8 py-3 rounded-lg font-semibold hover:bg-amber-50 transition-colors"
+      >
+        Próximos Eventos
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Posts em Destaque -->
+{% if featured_posts %}
+<section class="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+  <div class="max-w-7xl mx-auto">
+    <h2 class="text-3xl font-bold text-gray-900 mb-12 text-center">
+      Posts em Destaque
+    </h2>
+
+    <div class="grid lg:grid-cols-3 gap-8">
+      {% for post in featured_posts %}
+      <article
+        class="bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow overflow-hidden border"
+      >
+        <div
+          class="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center"
+        >
+          {% if post.image %}
+          <img
+            src="{{ post.image.url }}"
+            alt="{{ post.title }}"
+            class="w-full h-full object-cover"
+          />
+          {% else %}
+          <div
+            class="w-12 h-12 bg-amber-600 rounded-full flex items-center justify-center"
+          >
+            <svg
+              class="h-6 w-6 text-white"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          {% endif %}
+        </div>
+
+        <div class="p-6">
+          <h3
+            class="text-lg font-semibold leading-tight hover:text-amber-600 transition-colors mb-2"
+          >
+            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+          </h3>
+
+          <p class="text-sm text-gray-600 mb-2">
+            Por {{ post.author.get_full_name|default:post.author.username }} •
+            {{ post.publication_date|date:"d \de F \de Y" }}
+          </p>
+
+          <p class="text-gray-600 mb-4 text-sm">
+            {{ post.excerpt|truncatewords:20 }}
+          </p>
+
+          <a
+            href="{{ post.get_absolute_url }}"
+            class="text-amber-600 hover:text-amber-700 text-sm font-medium"
+          >
+            Ler mais →
+          </a>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- Eventos Próximos -->
+{% if upcoming_events %}
+<section class="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
+  <div class="max-w-7xl mx-auto">
+    <h2 class="text-3xl font-bold text-gray-900 mb-12 text-center">
+      Próximos Eventos
+    </h2>
+
+    <div class="grid lg:grid-cols-3 gap-8">
+      {% for event in upcoming_events %}
+      <div
+        class="bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow overflow-hidden border"
+      >
+        <div
+          class="aspect-video bg-gradient-to-br from-amber-100 to-amber-200 flex items-center justify-center"
+        >
+          {% if event.image %}
+          <img
+            src="{{ event.image.url }}"
+            alt="{{ event.title }}"
+            class="w-full h-full object-cover"
+          />
+          {% else %}
+          <div
+            class="w-12 h-12 bg-amber-600 rounded-full flex items-center justify-center"
+          >
+            <svg
+              class="h-6 w-6 text-white"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+          </div>
+          {% endif %}
+        </div>
+
+        <div class="p-6">
+          <h3
+            class="text-lg font-semibold leading-tight hover:text-amber-600 transition-colors mb-2"
+          >
+            <a href="{{ event.get_absolute_url }}">{{ event.title }}</a>
+          </h3>
+
+          <p class="text-sm text-gray-600 mb-2">
+            {{ event.start_date|date:"d \de F \de Y" }} • {{
+            event.start_date|date:"H:i" }}
+          </p>
+
+          <p class="text-gray-600 mb-4 text-sm">
+            {{ event.description|truncatewords:15 }}
+          </p>
+
+          <a
+            href="{{ event.get_absolute_url }}"
+            class="text-amber-600 hover:text-amber-700 text-sm font-medium"
+          >
+            Ver detalhes →
+          </a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="text-center mt-8">
+      <a
+        href="/eventos/"
+        class="bg-amber-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-amber-700 transition-colors"
+      >
+        Ver Todos os Eventos
+      </a>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- Call to Action -->
+<section class="py-16 px-4 sm:px-6 lg:px-8 bg-amber-600">
+  <div class="max-w-4xl mx-auto text-center">
+    <h2 class="text-3xl font-bold text-white mb-4">
+      Faça Parte da Nossa Comunidade
+    </h2>
+    <p class="text-xl text-amber-100 mb-8">
+      Junte-se a nós na promoção da educação antirracista e na construção de uma
+      sociedade mais justa e igualitária.
+    </p>
+    <a
+      href="/contato/"
+      class="bg-white text-amber-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+    >
+      Entre em Contato
+    </a>
+  </div>
+</section>
+{% endblock %}
